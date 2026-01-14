@@ -1,5 +1,5 @@
 {
-  "name": "cbc-pagos",
+  "name": "cbb-pagos",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,14 +9,22 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/db": "^0.18.3",
     "@astrojs/vercel": "^9.0.3",
     "@lucia-auth/adapter-drizzle": "^1.1.0",
+    "@neondatabase/serverless": "^1.0.2",
     "@tailwindcss/vite": "^4.1.18",
+    "@types/pg": "^8.16.0",
     "astro": "^5.16.9",
+    "dotenv": "^17.2.3",
+    "drizzle-kit": "^0.31.8",
+    "drizzle-orm": "^0.45.1",
     "lucia": "^3.2.2",
     "oslo": "^1.2.1",
+    "pg": "^8.16.3",
     "tailwindcss": "^4.1.18",
     "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
   }
 }

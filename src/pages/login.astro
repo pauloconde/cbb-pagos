@@ -1,60 +1,87 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 import { lucia } from "../auth";
 
 if (Astro.locals.user) {
-	return Astro.redirect("/admin");
+     return Astro.redirect("/admin");
 }
 ---
 
-<Layout title="Login Admin - CBC Pagos">
-	<main class="min-h-screen flex items-center justify-center bg-gray-950 px-4 relative overflow-hidden">
-        
-        <!-- Background Effects -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-             <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-purple-600/30 rounded-full blur-[100px] animate-pulse"></div>
-             <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-emerald-500/30 rounded-full blur-[100px] animate-pulse"></div>
-        </div>
+<Layout title="Login Admin - CBB Pagos">
+     <main
+          class="min-h-screen flex items-center justify-center bg-gray-950 px-4 relative overflow-hidden"
+     >
+          <!-- Background Effects -->
+          <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+               <div
+                    class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-purple-600/30 rounded-full blur-[100px] animate-pulse"
+               >
+               </div>
+               <div
+                    class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-emerald-500/30 rounded-full blur-[100px] animate-pulse"
+               >
+               </div>
+          </div>
 
-		<div class="relative z-10 w-full max-w-md bg-gray-900/60 backdrop-blur-xl border border-white/10 p-8 rounded-2xl shadow-2xl ring-1 ring-white/5">
-			<div class="mb-8 text-center">
-				<h1 class="text-3xl font-bold text-white mb-2 tracking-tight">Bienvenido</h1>
-				<p class="text-gray-400">Ingresa tus credenciales para administrar</p>
-			</div>
+          <div
+               class="relative z-10 w-full max-w-md bg-gray-900/60 backdrop-blur-xl border border-white/10 p-8 rounded-2xl shadow-2xl ring-1 ring-white/5"
+          >
+               <div class="mb-8 text-center">
+                    <h1
+                         class="text-3xl font-bold text-white mb-2 tracking-tight"
+                    >
+                         Bienvenido
+                    </h1>
+                    <p class="text-gray-400">
+                         Ingresa tus credenciales para administrar
+                    </p>
+               </div>
 
-			<form method="post" action="/api/login" class="space-y-6">
-				<div class="space-y-2">
-					<label for="username" class="text-sm font-medium text-gray-300 block ml-1">Usuario</label>
-					<input 
-                        id="username" 
-                        name="username" 
-                        required 
-                        class="w-full bg-gray-800/50 border border-gray-700 text-white text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-3 transition-colors placeholder-gray-500 focus:bg-gray-800" 
-                        placeholder="admin"
-                    />
-				</div>
-				<div class="space-y-2">
-					<label for="password" class="text-sm font-medium text-gray-300 block ml-1">Contraseña</label>
-					<input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        required 
-                        class="w-full bg-gray-800/50 border border-gray-700 text-white text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-3 transition-colors placeholder-gray-500 focus:bg-gray-800" 
-                        placeholder="••••••"
-                    />
-				</div>
-				<button 
-                    type="submit" 
-                    class="w-full text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 focus:ring-4 focus:outline-none focus:ring-emerald-500/30 font-semibold rounded-lg text-sm px-5 py-3 text-center transition-all transform hover:scale-[1.02] shadow-lg shadow-emerald-500/20"
-                >
-					Ingresar
-				</button>
-			</form>
-            
-            <div class="mt-6 text-center">
-                 <a href="/" class="text-sm text-gray-500 hover:text-white transition-colors">← Volver a la página pública</a>
-            </div>
-		</div>
-	</main>
+               <form method="post" action="/api/login" class="space-y-6">
+                    <div class="space-y-2">
+                         <label
+                              for="username"
+                              class="text-sm font-medium text-gray-300 block ml-1"
+                              >Usuario</label
+                         >
+                         <input
+                              id="username"
+                              name="username"
+                              required
+                              class="w-full bg-gray-800/50 border border-gray-700 text-white text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-3 transition-colors placeholder-gray-500 focus:bg-gray-800"
+                              placeholder="admin"
+                         />
+                    </div>
+                    <div class="space-y-2">
+                         <label
+                              for="password"
+                              class="text-sm font-medium text-gray-300 block ml-1"
+                              >Contraseña</label
+                         >
+                         <input
+                              type="password"
+                              id="password"
+                              name="password"
+                              required
+                              class="w-full bg-gray-800/50 border border-gray-700 text-white text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-3 transition-colors placeholder-gray-500 focus:bg-gray-800"
+                              placeholder="••••••"
+                         />
+                    </div>
+                    <button
+                         type="submit"
+                         class="w-full text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 focus:ring-4 focus:outline-none focus:ring-emerald-500/30 font-semibold rounded-lg text-sm px-5 py-3 text-center transition-all transform hover:scale-[1.02] shadow-lg shadow-emerald-500/20"
+                    >
+                         Ingresar
+                    </button>
+               </form>
+
+               <div class="mt-6 text-center">
+                    <a
+                         href="/"
+                         class="text-sm text-gray-500 hover:text-white transition-colors"
+                         >← Volver a la página pública</a
+                    >
+               </div>
+          </div>
+     </main>
 </Layout>

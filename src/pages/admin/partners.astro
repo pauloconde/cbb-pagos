@@ -1,6 +1,8 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
-import { db, Partner, eq, asc } from "astro:db";
+import { db } from "../../db";
+import { Partner } from "../../db/schema";
+import { asc } from "drizzle-orm";
 
 // Handle Form Submission (Add Partner)
 if (Astro.request.method === "POST") {

@@ -1,5 +1,7 @@
 import { lucia } from "../../auth";
-import { db, User, eq } from "astro:db";
+import { db } from "../../db";
+import { User } from "../../db/schema";
+import { eq } from "drizzle-orm";
 import { Scrypt } from "oslo/password";
 import type { APIContext } from "astro";
 

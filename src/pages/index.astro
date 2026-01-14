@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { db, Partner, Payment, eq, and, asc } from "astro:db";
+import { db } from "../db";
+import { Partner, Payment } from "../db/schema";
+import { eq, asc } from "drizzle-orm";
 
 // Get current date
 const now = new Date();
@@ -59,7 +61,7 @@ function getStatusText(partnerId: number, monthIndex: number) {
 }
 ---
 
-<Layout title="Estado de Pagos - CBC">
+<Layout title="Estado de Pagos - CBB">
 	<main class="min-h-screen bg-gray-950 text-white p-4 md:p-8 relative">
 		<div class="max-w-7xl mx-auto z-10 relative">
 			<header class="flex justify-between items-center mb-10">
@@ -67,7 +69,7 @@ function getStatusText(partnerId: number, monthIndex: number) {
 					<h1
 						class="text-4xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent"
 					>
-						CBC Pagos
+						CBB Pagos
 					</h1>
 					<p class="text-gray-400 mt-1">
 						Estado de cuenta socios {currentYear}
@@ -174,7 +176,7 @@ function getStatusText(partnerId: number, monthIndex: number) {
 			</div>
 
 			<footer class="mt-8 text-center text-gray-600 text-sm">
-				<p>&copy; {currentYear} CBC. Club de Pagos.</p>
+				<p>&copy; {currentYear} CBB. Club de Pagos.</p>
 			</footer>
 		</div>
 	</main>

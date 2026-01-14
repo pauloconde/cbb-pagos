@@ -1,8 +1,9 @@
 import { Lucia } from "lucia";
-import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-import { db, Session, User } from "astro:db";
+import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
+import { db } from "./db";
+import { Session, User } from "./db/schema";
 
-const adapter = new DrizzleSQLiteAdapter(db, Session, User);
+const adapter = new DrizzlePostgreSQLAdapter(db, Session, User);
 
 export const lucia = new Lucia(adapter, {
     sessionCookie: {

@@ -1,6 +1,8 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
-import { db, Partner, Payment, eq } from "astro:db";
+import { db } from "../../db";
+import { Partner, Payment } from "../../db/schema";
+import { eq } from "drizzle-orm";
 
 // Handle Form Submission (Add Payment)
 let message = "";
@@ -16,15 +18,15 @@ if (Astro.request.method === "POST") {
 
         if (partnerId && year && !isNaN(month) && amount) {
             try {
-                await db
-                    .insert(Payment)
-                    .values({
-                        partnerId,
-                        year,
-                        month,
-                        amount,
-                        date: new Date(),
-                    });
+                await db.insert(Payment).values({
+                    partnerId,
+                    year,
+                    month,
+                    amount,
+                    date: new Date(),
+                    currency: "USD",
+                    method: "efectivo",
+                });
                 message = "Pago registrado exitosamente.";
             } catch (e) {
                 console.error("Error creating payment", e);

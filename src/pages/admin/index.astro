@@ -1,6 +1,7 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
-import { db, Partner, Payment, eq } from "astro:db";
+import { db } from "../../db";
+import { Partner, Payment } from "../../db/schema";
 
 const partnersCount = (await db.select().from(Partner)).length;
 const paymentsCount = (await db.select().from(Payment)).length;
