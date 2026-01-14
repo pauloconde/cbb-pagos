@@ -1,2 +1,32 @@
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(17 24 39); /* gray-900 */
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(55 65 81); /* gray-700 */
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(75 85 99); /* gray-600 */
+}
+
+::-webkit-scrollbar-corner {
+    background: rgb(17 24 39); /* gray-900 */
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(55 65 81) rgb(17 24 39);
+}
