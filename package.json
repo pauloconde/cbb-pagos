@@ -1,0 +1,22 @@
+{
+  "name": "cbc-pagos",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/db": "^0.18.3",
+    "@astrojs/vercel": "^9.0.3",
+    "@lucia-auth/adapter-drizzle": "^1.1.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.16.9",
+    "lucia": "^3.2.2",
+    "oslo": "^1.2.1",
+    "tailwindcss": "^4.1.18",
+    "tailwindcss-animate": "^1.0.7"
+  }
+}

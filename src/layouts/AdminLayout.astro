@@ -1,0 +1,85 @@
+---
+import { lucia } from "../../auth";
+import Layout from "../../layouts/Layout.astro";
+
+// Check auth again mostly for type safety in templates, though middleware handles protection
+if (!Astro.locals.user) {
+    return Astro.redirect("/login");
+}
+---
+
+<Layout title="Admin Dashboard">
+    <div class="flex h-screen bg-gray-950">
+        <!-- Sidebar -->
+        <aside
+            class="w-64 bg-gray-900 border-r border-gray-800 hidden md:flex flex-col"
+        >
+            <div class="p-6 border-b border-gray-800">
+                <h2
+                    class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent"
+                >
+                    CBC Admin
+                </h2>
+            </div>
+
+            <nav class="flex-1 p-4 space-y-2">
+                <a
+                    href="/admin"
+                    class="flex items-center space-x-3 px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        ><path
+                            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
+                        ></path></svg
+                    >
+                    <span>Dashboard</span>
+                </a>
+                <a
+                    href="/admin/partners"
+                    class="flex items-center space-x-3 px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        ><path
+                            d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+                        ></path></svg
+                    >
+                    <span>Socios</span>
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-gray-800">
+                <form method="post" action="/api/logout">
+                    <button
+                        type="submit"
+                        class="flex w-full items-center space-x-3 px-4 py-3 text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-lg transition-colors"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            ><path
+                                fill-rule="evenodd"
+                                d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
+                                clip-rule="evenodd"></path></svg
+                        >
+                        <span>Cerrar Sesión</span>
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto p-4 md:p-8">
+            <slot />
+        </main>
+    </div>
+</Layout>

@@ -1,0 +1,194 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import { db, Partner, Payment, eq } from "astro:db";
+
+// Handle Form Submission (Add Payment)
+let message = "";
+if (Astro.request.method === "POST") {
+    const formData = await Astro.request.formData();
+    const action = formData.get("action");
+
+    if (action === "create_payment") {
+        const partnerId = Number(formData.get("partnerId"));
+        const year = Number(formData.get("year"));
+        const month = Number(formData.get("month"));
+        const amount = Number(formData.get("amount"));
+
+        if (partnerId && year && !isNaN(month) && amount) {
+            try {
+                await db
+                    .insert(Payment)
+                    .values({
+                        partnerId,
+                        year,
+                        month,
+                        amount,
+                        date: new Date(),
+                    });
+                message = "Pago registrado exitosamente.";
+            } catch (e) {
+                console.error("Error creating payment", e);
+                message = "Error al registrar el pago.";
+            }
+        }
+    }
+}
+
+// Fetch Partners for Select
+const partners = await db
+    .select()
+    .from(Partner)
+    .where(eq(Partner.active, true));
+const partnerIdParam = Astro.url.searchParams.get("partnerId");
+const selectedPartnerId = partnerIdParam ? Number(partnerIdParam) : null;
+
+const currentYear = new Date().getFullYear();
+const currentMonth = new Date().getMonth();
+const months = [
+    { index: 0, name: "Enero" },
+    { index: 1, name: "Febrero" },
+    { index: 2, name: "Marzo" },
+    { index: 3, name: "Abril" },
+    { index: 4, name: "Mayo" },
+    { index: 5, name: "Junio" },
+    { index: 6, name: "Julio" },
+    { index: 7, name: "Agosto" },
+    { index: 8, name: "Septiembre" },
+    { index: 9, name: "Octubre" },
+    { index: 10, name: "Noviembre" },
+    { index: 11, name: "Diciembre" },
+];
+---
+
+<AdminLayout>
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-white">Registrar Pago</h1>
+        <p class="text-gray-400 mt-1">
+            Registra los pagos mensuales de los socios.
+        </p>
+    </div>
+
+    {
+        message && (
+            <div
+                class={`p-4 mb-6 rounded-lg ${message.includes("Error") ? "bg-red-900/50 text-red-200 border border-red-700" : "bg-emerald-900/50 text-emerald-200 border border-emerald-700"}`}
+            >
+                {message}
+            </div>
+        )
+    }
+
+    <div
+        class="bg-gray-900 border border-gray-800 rounded-xl p-6 md:p-8 max-w-2xl"
+    >
+        <form method="post" class="space-y-6">
+            <input type="hidden" name="action" value="create_payment" />
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Select Partner -->
+                <div class="space-y-2 md:col-span-2">
+                    <label
+                        for="partnerId"
+                        class="text-sm font-medium text-gray-300 block"
+                        >Socio</label
+                    >
+                    <select
+                        id="partnerId"
+                        name="partnerId"
+                        required
+                        class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-2.5"
+                    >
+                        <option value="">Seleccionar Socio</option>
+                        {
+                            partners.map((p) => (
+                                <option
+                                    value={p.id}
+                                    selected={p.id === selectedPartnerId}
+                                >
+                                    {p.name} ({p.cedula})
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                <!-- Year -->
+                <div class="space-y-2">
+                    <label
+                        for="year"
+                        class="text-sm font-medium text-gray-300 block"
+                        >Año</label
+                    >
+                    <input
+                        type="number"
+                        id="year"
+                        name="year"
+                        required
+                        value={currentYear}
+                        class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-2.5"
+                    />
+                </div>
+
+                <!-- Month -->
+                <div class="space-y-2">
+                    <label
+                        for="month"
+                        class="text-sm font-medium text-gray-300 block"
+                        >Mes</label
+                    >
+                    <select
+                        id="month"
+                        name="month"
+                        required
+                        class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-2.5"
+                    >
+                        {
+                            months.map((m) => (
+                                <option
+                                    value={m.index}
+                                    selected={m.index === currentMonth}
+                                >
+                                    {m.name}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                <!-- Amount -->
+                <div class="space-y-2 md:col-span-2">
+                    <label
+                        for="amount"
+                        class="text-sm font-medium text-gray-300 block"
+                        >Monto</label
+                    >
+                    <div class="relative">
+                        <div
+                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                        >
+                            <span class="text-gray-500">$</span>
+                        </div>
+                        <input
+                            type="number"
+                            id="amount"
+                            name="amount"
+                            required
+                            step="0.01"
+                            class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-2.5 pl-8"
+                            placeholder="0.00"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-4 flex justify-end">
+                <button
+                    type="submit"
+                    class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold transition-all transform hover:scale-[1.02] shadow-lg shadow-emerald-500/20 w-full md:w-auto"
+                >
+                    Registrar Pago
+                </button>
+            </div>
+        </form>
+    </div>
+</AdminLayout>
